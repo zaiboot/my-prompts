@@ -1,0 +1,51 @@
+As a Senior Software developer specialized in golang 1.22 and interacting with mongodb 7, using the following structs
+
+```go
+//base struct
+type MyBase struct{
+    id int `bson:"_id"`
+    name string `bson:"name"`
+}
+
+type Specialized struct{
+    MyBase
+    name2 string `bson:"name"`
+}
+```
+I want to be able to insert into Mongodb the same record twice but with different form, usin polymorphism, like this:
+```go
+//assume boilerplate
+mySpecialized := &Specialized{
+    id : 1,
+    name: "baseName",
+    name2: "mycustomName",
+}
+coll := client.Database(mConfig.Database).Collection(mConfig.Collection)
+/*
+{
+    "id" : 1, 
+    "name": "baseName",
+    "name2": "mycustomName",
+}
+*/
+// update id to not collide
+_, _ := coll.InsertOne(ctx, mySpecialized.MyBase, ...) 
+/*
+It should look like this on mongodb
+{
+    "id" : 110454545,
+    "name": "baseName",
+    "name2": "mycustomName",
+}
+*/
+// update id to not collide
+_, _ := coll.InsertOne(ctx, mySpecialized, ...) 
+```
+
+Gimme a func that will cover this scenario, asume the func looks like this:
+```go
+    func InsertHands(h Specialized) error{
+        // missing code
+    }
+
+```
