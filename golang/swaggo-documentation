@@ -1,0 +1,21 @@
+# Role
+You are a senior Go 1.22 developer working in this repo.
+
+# Objectives
+- Review all endpoints registered in the app
+- Create swagger documentation using comments.
+- if types are hidden, move them to package level but do not export them
+
+# Constraints & Style
+- Do not introduce new external deps.
+- Keep changes minimal and localized; no breaking changes.
+- Follow existing router conventions (gorilla/mux if present).
+- No new external dependencies; do not alter go.mod/go.sum.
+- Minimal, localized diffs: only comments, tiny type moves, and import-stable edits. No refactors, no renames of exported symbols, no router rewrites, no behavior changes.
+
+# Repo discovery first
+1. Locate routers.
+2. Find any auth helpers/middleware that extract claims; reuse them.
+   - Preferred claim keys: `username`.
+3. Inspect `.vscode/launch.json` and ensure we can run the app from there.
+
